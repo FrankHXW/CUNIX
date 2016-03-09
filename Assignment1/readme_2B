@@ -1,5 +1,5 @@
 this is for the 2B;
-(1)use "make all" to generate exectuable file 2B
+(1)use "make all" to generate executable file 2B
 (2)input ./2B;
 (3)input 12 weights like 2 2 2 2 2 2 2 2 2 2 3 2,
    1 is lighter,2 is normal, 3 is heavier
