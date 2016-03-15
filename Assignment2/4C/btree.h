@@ -2,51 +2,50 @@
 #define _BTREE_H_
 
 
-#define btree_entry(ptr,type,member) \
-		container_of(ptr,type,member)
+#define btree_entry(ptr,type,member) container_of(ptr,type,member)
 
 
-typedef struct btree{
+struct btree{
 	struct  btree *lchild,*rchild;
-} btree;
+};
 
-typedef struct my_btree{
+struct my_btree{
 	char data;
 	struct btree root; 
-}my_btree;
+};
 
 //初始化btree root
-void init_btree(btree *ptr_root);
+void init_btree(struct btree *ptr_root);
 
 //先序创建二叉树
-btree *createBTree(btree *ptr_root);
+struct btree *createBTree(struct btree *ptr_root);
 
 //清空二叉树
-void clearBTree(btree *ptr_root);
+void clearBTree(struct btree *ptr_root);
 
 //先序遍历二叉树
-void preOrder(btree *ptr_root);
+void preOrder(struct btree *ptr_root);
 
 //中序遍历二叉树
-void midOrder(btree *ptr_root);
+void midOrder(struct btree *ptr_root);
 
 //后序遍历二叉树
-void postOrder(btree root);
+void postOrder(struct btree root);
 
 //输出叶子节点
-void displayLeaf(btree root);
+void displayLeaf(struct btree root);
 
 //左节点插入
-void insertLeftNode(btree root,char ch);
+void insertLeftNode(struct btree root,char ch);
 
 //右节点插入
-void insertRightNode(btree root,char ch);
+void insertRightNode(struct btree root,char ch);
 
 //删除左子树
-void deleteLeftTree(btree root);
+void deleteLeftTree(struct btree root);
 
 //删除右子树
-void deleteRightTree(btree root);
+void deleteRightTree(struct btree root);
 
 
 #endif
