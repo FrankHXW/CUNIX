@@ -9,34 +9,40 @@ void init_btree(struct btree *ptr_root)
 	ptr_root->rchild=ptr_root;
 }
 
+
 //先序创建二叉树
-struct btree *createBTree(struct btree *ptr_root)
+struct btree *createBTree(void)
 {
 	char ch=getchar();
 	if(ch=='#'){
-		ptr_root=NULL;
-		printf("input is #\n");
-		return ptr_root;
+		return NULL;
 	}
 	else{
 		struct 	my_btree *node=(struct my_btree *)malloc(sizeof(struct my_btree));
 		node->data=ch;
-		printf("input %c\n",ch);
-		ptr_root->lchild=createBTree((node->root).lchild);
-		ptr_root->rchild=createBTree((node->root).rchild);
-		return ptr_root;
+		(node->root).lchild=createBTree();
+		(node->root).rchild=createBTree();
+		return &(node->root);
 	}
 }
 
+
 //清空二叉树
-void clearBTree(struct btree *root)
+void clearBTree(const struct btree *ptr_root)
 {
-
-
+	if(ptr_root!=NULL){
+		struct btree *pl=ptr_root->lchild;
+		struct btree *pr=ptr_root->rchild;
+		struct my_btree *node=btree_entry(ptr_root,struct my_btree,root);
+		free(node);
+		clearBTree(pl);
+		clearBTree(pr);
+	}
 }
 
+
 //先序遍历二叉树
-void preOrder(struct btree *ptr_root)
+void preOrder(const struct btree *ptr_root)
 {	
 	if(ptr_root!=NULL){
 		struct	my_btree *node=btree_entry(ptr_root,struct my_btree,root);
@@ -44,32 +50,243 @@ void preOrder(struct btree *ptr_root)
 		preOrder(ptr_root->lchild);
 		preOrder(ptr_root->rchild); 
 	}
-	else {
-		printf("ptr_root is null");
-	}	
 }
 
+
 //中序遍历二叉树
-void midOrder(struct btree *ptr_root)
+void midOrder(const struct btree *ptr_root)
+{
+	if(ptr_root!=NULL){
+		midOrder(ptr_root->lchild);
+		struct	my_btree *node=btree_entry(ptr_root,struct my_btree,root);
+		printf("%c ",node->data);
+		midOrder(ptr_root->rchild); 
+	}
+}
+
+
+//后序遍历二叉树
+void postOrder(const struct btree *ptr_root)
+{
+	if(ptr_root!=NULL){
+		postOrder(ptr_root->lchild);
+		postOrder(ptr_root->rchild);
+		struct	my_btree *node=btree_entry(ptr_root,struct my_btree,root);
+		printf("%c ",node->data); 
+	}
+}
+
+
+//输出叶子节点
+void displayLeaf(const struct btree *ptr_root)
+{
+	if(ptr_root!=NULL){
+		if((ptr_root->lchild==NULL)&&(ptr_root->rchild==NULL)){
+			struct my_btree *node=btree_entry(ptr_root,struct my_btree,root);
+			printf("%c ",node->data);
+		}
+		else{
+			displayLeaf(ptr_root->lchild);
+			displayLeaf(ptr_root->rchild);
+		}
+	}
+}
+
+
+//求节点总数
+int countAllNodes(const struct btree *ptr_root)
+{
+	if(ptr_root!=0){
+		return (countAllNodes(ptr_root->lchild)+countAllNodes(ptr_root->rchild)+1);
+	}
+	return 0;
+}
+
+//求树的高度
+int getHeight(const struct btree *ptr_root)
+{
+	int lchildHeight=0;
+	int rchildHeight=0;
+	if(ptr_root!=NULL)	{
+		lchildHeight=getHeight(ptr_root->lchild);
+		rchildHeight=getHeight(ptr_root->rchild);
+		return (lchildHeight>rchildHeight?(1+lchildHeight):(1+rchildHeight));
+	}
+	return 0;
+}
+
+
+//求叶子节点的个数
+int countLeaf(const struct btree *ptr_root)
+{
+	if(ptr_root!=NULL){
+		if((ptr_root->lchild==NULL)&&(ptr_root->rchild==NULL)){
+			return 1;
+		}
+		else {
+			return countLeaf(ptr_root->lchild)+countLeaf(ptr_root->rchild);
+		}
+	}
+	return 0;
+}
+
+
+//查找节点
+struct btree *searchNode(const struct btree *ptr_root,char ch)
+{
+	
+	return NULL;
+}
+
+
+//左节点插入
+void insertLeftNode(struct btree *ptr_root,char ch)
+{
+
+
+
+}
+
+
+//右节点插入
+void insertRightNode(struct btree *ptr_root,char ch)
 {
 
 
 }
 
-//后序遍历二叉树
-void postOrder(struct btree root);
-
-//输出叶子节点
-void displayLeaf(struct btree root);
-
-//左节点插入
-void insertLeftNode(struct btree root,char ch);
-
-//右节点插入
-void insertRightNode(struct btree root,char ch);
 
 //删除左子树
-void deleteLeftTree(struct btree root);
+void deleteLeftTree(struct btree *ptr_root)
+{
+	if(ptr_root!=NULL){
+		clearBTree(ptr_root->lchild);
+		ptr_root->lchild=NULL;
+	}
+}
+
 
 //删除右子树
-void deleteRightTree(struct btree root);
+void deleteRightTree(struct btree *ptr_root)
+{
+	if(ptr_root!=NULL){
+		clearBTree(ptr_root->rchild);
+		ptr_root->rchild=NULL;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

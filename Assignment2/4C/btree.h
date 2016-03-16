@@ -26,34 +26,46 @@ struct my_btree{
 void init_btree(struct btree *ptr_root);
 
 //先序创建二叉树
-struct btree *createBTree(struct btree *ptr_root);
+struct btree *createBTree(void);
 
 //清空二叉树
-void clearBTree(struct btree *ptr_root);
+void clearBTree(const struct btree *ptr_root);
 
 //先序遍历二叉树
-void preOrder(struct btree *ptr_root);
+void preOrder(const struct btree *ptr_root);
 
 //中序遍历二叉树
-void midOrder(struct btree *ptr_root);
+void midOrder(const struct btree *ptr_root);
 
 //后序遍历二叉树
-void postOrder(struct btree root);
+void postOrder(const struct btree *ptr_root);
 
 //输出叶子节点
-void displayLeaf(struct btree root);
+void displayLeaf(const struct btree *ptr_root);
+
+//求节点总数
+int countAllNodes(const struct btree *ptr_root);
+
+//求树的高度
+int getHeight(const struct btree *ptr_root);
+
+//求叶子节点的个数
+int countLeaf(const struct btree *ptr_root);
+
+//查找节点
+struct btree *searchNode(const struct btree *ptr_root,char ch);
 
 //左节点插入
-void insertLeftNode(struct btree root,char ch);
+void insertLeftNode(struct btree *ptr_root,char ch);
 
 //右节点插入
-void insertRightNode(struct btree root,char ch);
+void insertRightNode(struct btree *ptr_root,char ch);
 
 //删除左子树
-void deleteLeftTree(struct btree root);
+void deleteLeftTree(struct btree *ptr_root);
 
 //删除右子树
-void deleteRightTree(struct btree root);
+void deleteRightTree(struct btree *ptr_root);
 
 
 #endif
