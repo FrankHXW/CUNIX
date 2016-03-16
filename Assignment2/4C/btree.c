@@ -15,11 +15,13 @@ struct btree *createBTree(struct btree *ptr_root)
 	char ch=getchar();
 	if(ch=='#'){
 		ptr_root=NULL;
+		printf("input is #\n");
 		return ptr_root;
 	}
 	else{
 		struct 	my_btree *node=(struct my_btree *)malloc(sizeof(struct my_btree));
 		node->data=ch;
+		printf("input %c\n",ch);
 		ptr_root->lchild=createBTree((node->root).lchild);
 		ptr_root->rchild=createBTree((node->root).rchild);
 		return ptr_root;
@@ -37,10 +39,13 @@ void clearBTree(struct btree *root)
 void preOrder(struct btree *ptr_root)
 {	
 	if(ptr_root!=NULL){
-		struct	my_btree *node=(struct my_btree *)container_entry(ptr_root,struct my_btree,root);
+		struct	my_btree *node=btree_entry(ptr_root,struct my_btree,root);
 		printf("%c ",node->data);
 		preOrder(ptr_root->lchild);
 		preOrder(ptr_root->rchild); 
+	}
+	else {
+		printf("ptr_root is null");
 	}	
 }
 

@@ -1,6 +1,14 @@
 #ifndef _BTREE_H_
 #define _BTREE_H_
 
+#define offsetof(type,member)	\
+	((size_t) &((type *)0)->member)
+
+#define container_of(ptr,type,member) ({				\
+	const typeof(((type *)0)->member) *__mptr=(ptr);		\
+	(type *) ( (char *)__mptr-offsetof(type,member) );})
+
+
 
 #define btree_entry(ptr,type,member) container_of(ptr,type,member)
 

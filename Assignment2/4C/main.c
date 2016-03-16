@@ -1,11 +1,12 @@
 #include "stdio.h"
+#include "stdlib.h"
 #include "btree.h"
 
 int main(void)
 {
-	btree root;
-	init_btree(&btree);
-	root=createBTree(&root);	
-	preOrder(root);
+	struct btree *ptr_root=malloc(sizeof(struct btree));
+	init_btree(ptr_root);
+	createBTree(ptr_root);	
+	preOrder(ptr_root);
 	return 0;
 }
