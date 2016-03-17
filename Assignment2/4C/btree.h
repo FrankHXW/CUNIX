@@ -53,7 +53,7 @@ int getHeight(const struct btree *ptr_root);
 int countLeaf(const struct btree *ptr_root);
 
 //查找节点
-struct btree *searchNode(const struct btree *ptr_root,char ch);
+struct btree *searchNode(struct btree *ptr_root,char ch);
 
 //左节点插入
 void insertLeftNode(struct btree *ptr_root,char ch);

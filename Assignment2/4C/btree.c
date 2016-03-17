@@ -132,9 +132,23 @@ int countLeaf(const struct btree *ptr_root)
 
 
 //查找节点
-struct btree *searchNode(const struct btree *ptr_root,char ch)
+struct btree *searchNode(struct btree *ptr_root,char ch)
 {
-	
+	if(ptr_root!=NULL){
+		struct my_btree *node=btree_entry(ptr_root,struct my_btree,root);
+		if(node->data==ch){
+			return ptr_root;
+		}
+		else{
+			struct btree *tmp=searchNode(ptr_root->lchild,ch);
+			if(tmp!=NULL){
+				return tmp;
+			}
+			else{
+				return searchNode(ptr_root->rchild,ch);
+			}
+		}
+	}	
 	return NULL;
 }
 
@@ -142,17 +156,22 @@ struct btree *searchNode(const struct btree *ptr_root,char ch)
 //左节点插入
 void insertLeftNode(struct btree *ptr_root,char ch)
 {
-
-
-
+	struct my_btree *node=(struct my_btree *)malloc(sizeof(struct my_btree));
+	node->data=ch;
+	(node->root).lchild=ptr_root->lchild;
+	(node->root).rchild=NULL;
+	ptr_root->lchild=&(node->root);
 }
 
 
 //右节点插入
 void insertRightNode(struct btree *ptr_root,char ch)
 {
-
-
+	struct my_btree *node=(struct my_btree *)malloc(sizeof(struct my_btree));
+	node->data=ch;
+	(node->root).lchild=NULL;
+	(node->root).rchild=ptr_root->rchild;
+	ptr_root->rchild=&(node->root);
 }
 
 

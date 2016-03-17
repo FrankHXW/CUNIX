@@ -21,7 +21,7 @@ int main(void)
 		printf("\n\nprint btree in post-order:\n");
 		postOrder(ptr_root);
 
-		printf("\n\nthis btree's nodes amount: \n%d",countAllNodes(ptr_root));		
+		printf("\n\nthis btree's nodes' amount: \n%d",countAllNodes(ptr_root));		
 		
 		printf("\n\nthis btree's height: \n%d",getHeight(ptr_root));
 
@@ -30,6 +30,17 @@ int main(void)
 		printf("\n\nprint btree's leaf:\n");
 		displayLeaf(ptr_root);
 		
+		printf("\n\nfind 'a' and insert 'x' in left,then display all node in pre-oreder:\n");
+		struct btree *foundRoot=searchNode(ptr_root,'a');
+		insertLeftNode(foundRoot,'x');
+		preOrder(ptr_root);
+
+		printf("\n\nfind 'a' and insert 'y' in left,then display all node in pre-oreder:\n");
+		foundRoot=searchNode(ptr_root,'a');
+		insertRightNode(foundRoot,'y');
+		preOrder(ptr_root);
+
+
 		printf("\n\ndelete leftTree and display left node in pre-order:\n");
 		deleteLeftTree(ptr_root);
 		preOrder(ptr_root);

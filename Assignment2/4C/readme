@@ -1,0 +1,28 @@
+this is the instruction of 4C:
+see details in btree.c and btree.h 
+	note that this program input binary's data in pre-order
+and use '#' as the end leaf,such as:
+
+        a            :  a##
+
+	    a 		     :  ab###
+       /
+      b
+	
+	    a			 :  a#c##
+		 \
+		  c
+
+		a			 :  ab##c##
+	   / \
+	  b	  c		
+
+
+		a			 : abd##e##cf##g##
+	   / \
+	  b   c
+	 / \ / \
+	d  e f  g
+
+
+
