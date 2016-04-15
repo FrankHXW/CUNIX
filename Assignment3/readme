@@ -4,7 +4,7 @@
 2.The designed structure is "stuInfoLE" and "stuInfoBE",see 
   details in csv.h
 
-3.here are two important functions:
+3.Here are two important functions:
   convStuInfoFromLEToBE() and convStuInfoFromBEToLE()
   see details in csv.h and csv.c
 
