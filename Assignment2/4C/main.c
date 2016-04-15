@@ -55,5 +55,6 @@ int main(void)
 		char ch;
 		while((ch=getchar())!='\n'&&ch!=EOF);
 	}
+
 	return 0;
 }
