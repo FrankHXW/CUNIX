@@ -1,0 +1,13 @@
+1.Just input "make all" and "./8",the result will be shown;
+
+2.The source codes are in "csv.c" and "csv.h",the main function
+  is "readCSVAsciiAndSaveBin()" and "readCSVBinAndPrintByMMap()",
+  the former uses "pipe" to send data between and the father and 
+  the child processes,the latter use "mmap()" to map binary file 
+  into memory and print the result;
+
+3.Here the code will generate child processes's amounts equal to 
+  inputting .csv file line's amounts,and the amounts of pipes is 
+  equal to two times of child processes's amounts; 
+
+4.Details can be saw in source code,and there are detailed comments. 
