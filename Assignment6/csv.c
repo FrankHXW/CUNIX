@@ -157,12 +157,16 @@ int readCSVAsciiAndSaveBin(char *_asciiFileName,char *_binFileName)
                 //创建对应不同端口的套接口
                 if((errorCode=srv_sock=socket(AF_INET,SOCK_STREAM,0))<0){
                     printf("server %d create socket error! error code:%d\n",i,errorCode);
+                    free(childPidPtr);
+                    free(portPtr);
                     exit(-1);
                 }
                 //设置端口可复用，否则上次结束后这次绑定不成功
                 int yes=1;
                 if(setsockopt(srv_sock,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(yes))==-1){
                     printf("server %d set reuse address error!",i);
+                    free(childPidPtr);
+                    free(portPtr);
                     exit(-2);
                 }
                 memset(&srv,0,sizeof(srv));
@@ -172,27 +176,37 @@ int readCSVAsciiAndSaveBin(char *_asciiFileName,char *_binFileName)
                 //绑定套接字
                 if((errorCode=bind(srv_sock,(struct sockaddr *)&srv,sizeof(srv)))<0){
                     printf("server %d bind error!error code:%d\n",i,errorCode);
+                    free(childPidPtr);
+                    free(portPtr);
                     exit(-3);
                 }
                 //监听套接字
                 if((errorCode=listen(srv_sock,3)<0)){
                     printf("server %d listen error!error code:%d\n",i,errorCode);
+                    free(childPidPtr);
+                    free(portPtr);
                     exit(-4);
                 }
                 //等待客户端连接
                 c=sizeof(struct sockaddr_in);
                 if((errorCode=clt_sock=accept(srv_sock,(struct sockaddr *)&clt,(socklen_t *)&c))<0){
                     printf("server %d accept error! error code:%d\n",i,errorCode);
+                    free(childPidPtr);
+                    free(portPtr);
                     exit(-5);
                 }
                 //服务端读取客户端发送的数据
                 read_size=recv(clt_sock,buffer,MAX_LINE_SIZE,0);
                 if(read_size==0){
                     printf("server %d:client disconnectd\n",i);
+                    free(childPidPtr);
+                    free(portPtr);
                     exit(-6);
                 }
                 else if(read_size==-1){
                     printf("server %d:recv failed\n",i);
+                    free(childPidPtr);
+                    free(portPtr);
                     exit(-7);
                 }      
                 //解析读取的行数据到小段结构体
@@ -205,6 +219,8 @@ int readCSVAsciiAndSaveBin(char *_asciiFileName,char *_binFileName)
                 send(clt_sock,(char *)&stuInfoBETmp,sizeof(stuInfoBETmp),0);
                 close(clt_sock);            
                 close(srv_sock);
+                free(childPidPtr);
+                free(portPtr);
                 exit(0);
             }
         }
@@ -247,7 +263,11 @@ int readCSVAsciiAndSaveBin(char *_asciiFileName,char *_binFileName)
             return -1;
         }
     }
+    //注意释放分配的内存资源
     free(childPidPtr);
+    free(portPtr);
+    free(sockPtr);
+    free(srvPtr);
 
     //客户端读取各服务端转码后的文件转为一个大的bin文件
     FILE *fpBin=fopen(_binFileName,"w");
