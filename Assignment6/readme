@@ -1,0 +1,13 @@
+1.Just input "make all" and "./9",the result will be shown;
+
+2.The source codes are in "csv.c" and "csv.h",the main function
+  is "readCSVAsciiAndSaveBin()" and "readCSVBinAndPrintByMMap()",
+  the former uses "socket" to send data between the client and 
+  multi server,the latter use "mmap()" to map binary file 
+  into memory and print the result;
+
+3.Here the code will generate multi processes working as servers,
+  the server's amounts is equal to inputting .csv file line's amounts,
+  and the amounts of client's sockets is equal to server's amounts;
+
+4.Details can be saw in source code,and there are detailed comments. 
