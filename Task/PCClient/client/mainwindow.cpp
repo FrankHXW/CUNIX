@@ -469,7 +469,7 @@ void MainWindow::initializeRightWidget(void)
 void MainWindow::setDefaultValue(void)
 {
     //initialize default value
-    serverIP="127.0.0.1";
+    serverIP="45.78.14.139";
     serverPort=12346;
     serverIpLineEdit->setText(serverIP);
     serverPortLineEdit->setText(QString::number(serverPort));

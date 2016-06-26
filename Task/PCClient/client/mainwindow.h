@@ -113,7 +113,7 @@ public:
     QCustomPlot *curvePlot;             //plot device's sensor data
     QTimer *plotTimer;                  //used for plot
 
-    QString serverIP="166.111.64.129";
+    QString serverIP="45.78.14.139";
     quint16 serverPort=12346;
 
     QTcpSocket *qSocket;
