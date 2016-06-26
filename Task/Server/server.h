@@ -9,10 +9,13 @@
 #include <sys/wait.h>
 #include <ifaddrs.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <netdb.h>
 #include <sys/epoll.h>
+#include <errno.h>
+#include <map>
 
 #define LOCAL_LISTEN_PORT   8888
 #define DEVICE_LISTEN_PORT  12345
@@ -22,6 +25,7 @@
 #define EPOLL_EVENTS_SIZE 100
 
 #define SENSORS_DATA_MAX_SIZE  100
+#define SENSORS_DATA_FRAME_SIZE 80
 
 //打印机器信息:包括Ip和端口
 int  printMachineInfo(void);

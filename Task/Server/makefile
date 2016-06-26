@@ -1,7 +1,7 @@
 CFILES=$(wildcard *.c)
 OBJS=$(CFILES:.c=.o)
-CC=gcc
-CFLAGS=-Wall -DDEBUG -g3 -std=c11
+CC=g++
+CFLAGS=-Wall -DDEBUG -g3 -std=c++11
 
 all: server
 server: $(OBJS) 

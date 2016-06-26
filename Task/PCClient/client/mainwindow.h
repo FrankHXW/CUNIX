@@ -12,27 +12,42 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QMessageBox>
+#include <QStackedWidget>
 #include <QTcpSocket>
 #include <QHostAddress>
 #include "qcustomplot.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+#include <iomanip>
 #include <sstream>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <sys/wait.h>
-#include <ifaddrs.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <fcntl.h>
+
+#define SENSORS_DATA_MAX_SIZE 100   //must be 4*n
+#define SENSORS_DATA_FRAME_SIZE 80  //must be 4*n
+#define SENSORS_DEVICE_MAXIMUM_NUMBER 20
+
+using namespace std;
+
+struct SensorDataStruct{
+    int32_t _machineId;
+    string _machineIp;
+    double _timeStamp;
+    int32_t _sendCount;
+    float _accelermeter_X;
+    float _accelermeter_Y;
+    float _accelermeter_Z;
+    float _gyroscope_X;
+    float _gyroscope_Y;
+    float _gyroscope_Z;
+    float _magnetic_X;
+    float _magnetic_Y;
+    float _magnetic_Z;
+    float _temperature;
+    float _light;
+};
 
 
-namespace Ui {
-class MainWindow;
-}
+
 
 class MainWindow : public QMainWindow
 {
@@ -96,15 +111,19 @@ public:
     QMessageBox *messageBox;
 
     QCustomPlot *curvePlot;             //plot device's sensor data
-
     QTimer *plotTimer;                  //used for plot
-
-    int maximumSensorDevices=20;
 
     QString serverIP="166.111.64.129";
     quint16 serverPort=12346;
 
     QTcpSocket *qSocket;
+
+    char qSocketReadedBuffer[SENSORS_DATA_MAX_SIZE];
+    int32_t  qSocketIntArray[SENSORS_DATA_MAX_SIZE/4];
+    struct SensorDataStruct sensorDataStruct;
+
+    std::vector<std::vector<struct SensorDataStruct> > sensorsDataVector;
+
 
 public slots:
     void connectServer(void);
@@ -115,15 +134,34 @@ public slots:
     void readServerData(void);
     void connectServerFailed(void);
 
-    void realtimeDataSlot(void);
+     void updateDataToPlotFlag(void);
+
+    void realtimeDataPlot1(void);
+    void realtimeDataPlot(void);
 
 private:
    void initializeLeftWidget(void);
+   void initializeRightWidget1(void);
+
+   QRgb rgb[11]={0xff000000,0xff6f0000,0xffaf0000,0xffff0000,0xff006f00,0xff00af00,
+                0xff00ff00,0xffffff00,0xffff00ff,0xff0000ff,0xff00ffff,};
+   QString legendName[11]={"acc_x","acc_y","acc_z","gyr_x","gyr_y","gyr_z","mag_x","mag_y","mag_z","tempe","light"};
+   bool dataToPlotFlag[11];
+
+   QCustomPlot *curvePlotArray[SENSORS_DEVICE_MAXIMUM_NUMBER];
+   QWidget *curvePlotWidgetArray[SENSORS_DEVICE_MAXIMUM_NUMBER];
+   QStackedWidget *stackedWidget;
    void initializeRightWidget(void);
+
+   void plotSensorData(int _deviceId);
+
+
 
    void setDefaultValue(void);
 
+   int convertByteStremToIntArray(void);
 
+   void saveInputData(void);
 
 };
 
